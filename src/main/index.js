@@ -1,8 +1,11 @@
 'use strict'
 
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, ipcMain } from 'electron'
 import * as path from 'path'
 import { format as formatUrl } from 'url'
+
+import vfs from './lib/virtual-file-system';
+import ssh from './lib/ssh';
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -49,3 +52,7 @@ app.on('activate', () => {
 app.on('ready', () => {
   mainWindow = createMainWindow()
 })
+
+// adds IPC hanlders
+vfs.addIPCHandlers(ipcMain);
+ssh.addIPCHandlers(ipcMain);

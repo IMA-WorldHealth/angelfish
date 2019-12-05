@@ -1,22 +1,33 @@
 {
   "name": "AngelFish",
   "version": "0.0.1",
+  "homepage" : "https://bhi.ma",
   "license": "MIT",
-  "author": "jniles",
+  "author": {
+    "name" : "jniles",
+    "email" : "jonathanwniles@imaworldhealth.org",
+    "url" : "https://bhi.ma"
+  },
+  "description" : "Synchronize databases over the network via SSH.",
   "scripts": {
     "dev": "electron-webpack dev",
     "compile": "electron-webpack",
-    "dist": "yarn compile && electron-builder",
+    "dist": "yarn compile && electron-builder --linux deb --x64",
     "pack": "electron-builder --dir",
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null",
     "postinstall": "electron-builder install-app-deps"
   },
   "build": {},
   "dependencies": {
-    "source-map-support": "^0.5.12"
+    "lzma-native": "^5.0.0",
+    "node-mysql-import": "^1.1.0",
+    "node-ssh": "^6.0.0",
+    "source-map-support": "^0.5.12",
+    "spectre.css": "^0.5.8"
   },
   "devDependencies": {
-    "electron": "5.0.6",
+    "css-loader": "^3.2.1",
+    "electron": "^7.1.3",
     "electron-builder": "^21.0.11",
     "electron-webpack": "^2.7.4",
     "electron-webpack-eslint": "^5.0.1",
@@ -26,6 +37,6 @@
     "eslint-plugin-vue": "^6.0.1",
     "vue": "^2.6.10",
     "vue-eslint-parser": "^7.0.0",
-    "webpack": "~4.35.3"
+    "webpack": "~4.41.2"
   }
 }

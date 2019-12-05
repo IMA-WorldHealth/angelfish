@@ -1,6 +1,6 @@
 import Vue from 'vue';
-import setup from './components/setup/setup.vue';
+import app from './app.vue';
 
 new Vue({
-  render : h => h(setup),
+  render : h => h(app),
 }).$mount('#app');
