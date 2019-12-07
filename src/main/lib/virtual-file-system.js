@@ -4,6 +4,7 @@ const lzma = require('lzma-native');
 const MySQLImporter= require('node-mysql-import');
 const debug = require('debug')('angelfish:vfs');
 const { app } = require('electron');
+const { getFileStat } = require('./util');
 
 // preprocess and gets absolute local path of database file(s)
 function getLocalPath(params, database) {
@@ -19,7 +20,8 @@ function getLocalPath(params, database) {
 async function getLocalFileList(params, database) {
   const db = getLocalPath(params, database);
   const paths = await fs.promises.readdir(db);
-  return paths;
+  const files = await Promise.all(paths.map(file => getFileStat(path.join(db, file))));
+  return files;
 }
 
 /**

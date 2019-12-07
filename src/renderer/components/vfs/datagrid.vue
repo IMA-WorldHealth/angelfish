@@ -8,7 +8,7 @@
         :class="{ 'loading': isSynchronising }"
         @click="sync"
       >
-        <i class="icon icon-refresh" />
+        <i class="icon icon-download" />
         Sync Latest Database
       </a>
     </h1>
@@ -24,7 +24,12 @@
       <thead>
         <tr>
           <th>File</th>
-          <th colspan="2">
+          <th>Size</th>
+          <th>Creation Date</th>
+          <th
+            colspan="2"
+            class="text-center"
+          >
             Actions
           </th>
         </tr>
@@ -32,20 +37,34 @@
       <tbody>
         <tr
           v-for="file in files"
-          :key="file"
+          :key="file.name"
         >
-          <td>{{ file }}</td>
+          <td>{{ file.name }}</td>
+          <td>{{ file.hrSize }}</td>
           <td>
-            <a
-              href="#"
-              @click="build(file)"
-            >Build File</a>
+            {{ new Date(file.birthtime).toLocaleDateString('fr') }}
+            {{ new Date(file.birthtime).toLocaleTimeString('fr') }}
           </td>
           <td>
             <a
               href="#"
-              @click="remove(file)"
-            >Remove File</a>
+              class="btn btn-link"
+              @click="build(file.name)"
+            >
+              <i class="icon icon-refresh" />
+              Build File
+            </a>
+          </td>
+          <td>
+            <a
+              href="#"
+              class="btn btn-link"
+              style="color:red;"
+              @click="remove(file.name)"
+            >
+              <i class="icon icon-delete" />
+              Remove File
+            </a>
           </td>
         </tr>
         <tr v-if="files.length === 0">

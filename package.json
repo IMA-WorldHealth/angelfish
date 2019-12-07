@@ -1,14 +1,14 @@
 {
   "name": "AngelFish",
   "version": "0.0.1",
-  "homepage" : "https://bhi.ma",
+  "homepage": "https://bhi.ma",
   "license": "MIT",
   "author": {
-    "name" : "jniles",
-    "email" : "jonathanwniles@imaworldhealth.org",
-    "url" : "https://bhi.ma"
+    "name": "jniles",
+    "email": "jonathanwniles@imaworldhealth.org",
+    "url": "https://bhi.ma"
   },
-  "description" : "Synchronize databases over the network via SSH.",
+  "description": "Synchronize databases over the network via SSH.",
   "scripts": {
     "dev": "electron-webpack dev",
     "compile": "electron-webpack",
@@ -19,6 +19,7 @@
   },
   "build": {},
   "dependencies": {
+    "human-readable-bytes": "^1.1.0",
     "lzma-native": "^5.0.0",
     "node-mysql-import": "^1.1.0",
     "node-ssh": "^6.0.0",

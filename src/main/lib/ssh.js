@@ -1,6 +1,7 @@
 const SSH = require('node-ssh');
 const path = require('path');
 const debug = require('debug')('angelfish:ssh');
+const { getFileStat } = require('./util');
 
 const client = new SSH();
 
@@ -39,7 +40,7 @@ async function copy(credentials, database) {
 
     debug(`Downloaded to ${localFilePath}`);
 
-    return path.basename(localFilePath);
+    return getFileStat(localFilePath);
   } catch (e) {
     debug('Something went wrong');
     debug(e);
