@@ -101,9 +101,13 @@
     methods : {
       async sync() {
         this.isSynchronising = true;
+
+        // checks if the file exists already in our array of files
+        const hasFileAlready = (fname) => this.files.map(f => f.name).includes(fname);
+
         try {
           const next = await ipcRenderer.invoke('ssh.copy', store.data, this.database.toLowerCase());
-          if (next && !this.files.includes(next)) { this.files.push(next); }
+          if (next && !hasFileAlready(next.name)) { this.files.push(next); }
         } catch (e) {
           console.error(e);
         }
