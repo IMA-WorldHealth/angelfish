@@ -1,4 +1,4 @@
-let data;
+let data = {};
 
 // load initial data if it exists
 try {
@@ -16,7 +16,6 @@ const store = {
 
   setState(stateName) {
     if (this.debug) console.log(`setState(${stateName});`);
-
     this.state = stateName;
   },
 

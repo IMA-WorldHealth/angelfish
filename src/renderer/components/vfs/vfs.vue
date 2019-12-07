@@ -64,10 +64,7 @@
 
       async setActive(db) {
         this.current = db;
-
-        console.log('sending data to IPC main');
         const data = await ipcRenderer.invoke('vfs.list-local', store.data, this.current.toLowerCase());
-        console.log('got data back from IPC main:', data);
         this.files = data;
       }
     }

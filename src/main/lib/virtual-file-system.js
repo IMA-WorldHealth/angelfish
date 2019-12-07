@@ -17,8 +17,6 @@ function getLocalPath(params, database) {
  * Pulls in a list of the local files stored on the system in the local
  */
 async function getLocalFileList(params, database) {
-  console.log('params:', params);
-  console.log('database:', database);
   const db = getLocalPath(params, database);
   const paths = await fs.promises.readdir(db);
   return paths;

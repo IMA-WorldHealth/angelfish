@@ -18,6 +18,7 @@
           href="#close"
           class="btn btn-clear float-right"
           aria-label="Close"
+          @click="close"
         />
         <div class="modal-title h5">
           Parameters
@@ -152,6 +153,10 @@
     },
 
     methods : {
+      close() {
+        store.setState('management');
+      },
+
       submit(e) {
         e.preventDefault();
 

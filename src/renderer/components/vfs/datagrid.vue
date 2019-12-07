@@ -13,11 +13,11 @@
       </a>
     </h1>
 
-    <div
-      v-if="isBuilding"
-      style="color: red;"
-    >
-      We are building the database!
+    <div v-if="isBuilding">
+      <progress
+        class="progress"
+        max="100"
+      />
     </div>
 
     <table class="table">
