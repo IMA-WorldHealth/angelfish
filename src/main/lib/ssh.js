@@ -2,13 +2,14 @@ const SSH = require('node-ssh');
 const path = require('path');
 const debug = require('debug')('angelfish:ssh');
 const EventEmitter = require('events');
-const { getFileStat } = require('./util');
+const { getFileStat, i18n } = require('./util');
 
 const client = new SSH();
 
 const pubsub = new EventEmitter();
 
-function logger(message, isError = false) {
+function logger(i18nKey, params, isError = false) {
+  const message = i18n(i18nKey, params);
   debug(message);
   pubsub.emit('ssh.log', { message, type: isError ? 'error' : 'info' });
 }
@@ -21,7 +22,7 @@ function logger(message, isError = false) {
  */
 async function copy(credentials, database) {
   try {
-    logger('Connecting to remote SSH instance...');
+    logger('SSH.CONNECT', { user : credentials.username, host : credentials.hostname });
 
     await client.connect({
       host: credentials.hostname,
@@ -29,30 +30,31 @@ async function copy(credentials, database) {
       password : credentials.password,
     });
 
+    logger('SSH.CONNECTED', { user : credentials.username, host : credentials.hostname });
+
     const remotePath = path.join(credentials.remotebackupdir, '/', database);
 
-    logger(`Looking up most recent file in ${remotePath}.`);
+    logger('SSH.LOOKUP_BACKUP', { remotePath });
 
     // get the latest file changed on the server
     const lastChangedFile = await client.exec(`cd ${remotePath}; ls -Art *.xz | tail -n 1`);
 
-    logger(`Most recent file is: ${lastChangedFile}`);
+    logger('SSH.LAST_CHANGED', { lastChangedFile });
 
     const remoteFilePath = path.join(remotePath, lastChangedFile);
     const localFilePath = path.join(credentials.localbackupdir, database, lastChangedFile);
 
-    logger(`Path is: ${remoteFilePath}`);
-    logger(`Downloading ${remoteFilePath}`);
+    logger('SSH.DOWNLOADING_FILE', { remoteFilePath });
 
     // download it to local directory
     await client.getFile(localFilePath, remoteFilePath);
 
-    logger(`Downloaded to ${localFilePath}`);
+    logger('SSH.DOWNLOADED_TO', { localFilePath });
 
     return getFileStat(localFilePath);
   } catch (e) {
-    logger(`An error occurred! It is ${e.toString()}`, true);
-    logger(`Full stack: ${e.stack}`, true);
+    logger('SSH.ERROR',  { error : e.toString() }, true);
+    logger('SSH.ERROR_STACK',  { stack : e.stack }, true);
   }
 
   return '';

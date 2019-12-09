@@ -5,11 +5,12 @@ const MySQLImporter= require('node-mysql-import');
 const debug = require('debug')('angelfish:vfs');
 const EventEmitter = require('events');
 const { app } = require('electron');
-const { getFileStat } = require('./util');
+const { getFileStat, i18n } = require('./util');
 
 const pubsub = new EventEmitter();
 
-function logger(message, isError = false) {
+function logger(i18nKey, params, isError = false) {
+  const message = i18n(i18nKey, params);
   debug(message);
   pubsub.emit('vfs.log', { message, timestamp: Date.now(), type: isError ? 'error' : 'info' });
 }
@@ -41,9 +42,9 @@ async function getLocalFileList(params, database) {
 async function removeLocalBackup(params, database, fname) {
   const directory = getLocalPath(params, database);
   const fullpath = path.join(directory, fname);
-  logger(`rm: removing ${fullpath}.`);
+  logger('RM.START', { fullpath });
   await fs.promises.unlink(fullpath);
-  logger(`rm: done.`);
+  logger('RM.END');
 }
 
 
@@ -60,48 +61,53 @@ async function unxz(fpath) {
 
   const newFilePath = path.resolve(tmpDir, baseName);
 
-  logger(`unzip: Parsing ${fpath} into ${newFilePath}`);
+  logger('UNZIP.CONVERTING', { fpath, newFilePath });
 
-  logger('unzip: Reading file into memory from the disk.');
   const input = await fs.promises.readFile(fpath);
-  logger('unzip: File read into memory.');
-  logger('unzip: Decompressing file with LZMA algorithm.');
+
+  logger('UNZIP.READ_INTO_MEMORY');
+  logger('UNZIP.DECOMPRESS_FILE');
+
   const output = await lzma.decompress(input);
-  logger('unzip: File decompressed.  Writing decompressed output to disk.');
+
+  logger('UNZIP.DECOMPRESS_WRITE');
+
   await fs.promises.writeFile(newFilePath, output, 'utf8');
-  logger(`unzip: File written to ${newFilePath}`);
+
+  logger('UNZIP.FILE_WRITTEN', {newFilePath});
 
   return newFilePath;
 }
 
 async function build(params, database, fname) {
-  logger(`build: Starting build of ${fname}`);
+  logger('BUILD.START', { fname });
 
   const backuppath = getLocalPath(params, database);
   const dbpath = path.join(backuppath, fname);
 
-  logger(`build: Using ${dbpath} for build.`);
-  logger(`build: Unzipping ${dbpath}.`);
+  logger('BUILD.USING_PATH', { dbpath });
+  logger('BUILD.UNZIPPING_PATH', { dbpath});
 
   const unzippedPath= await unxz(dbpath);
 
-  logger(`build: Done. Unzipped to ${unzippedPath}.`);
+  logger('BUILD.UNZIPPED_TO', { unzippedPath });
 
   const importer = await new MySQLImporter('localhost', 3306, params.mysqluser, params.mysqlpassword, database, unzippedPath);
 
-  logger(`build: Created new MySQL importer with username ${params.mysqluser}`);
+  logger('BUILD.MYSQL_INIT', { user : params.mysqluser });
 
   await importer.init();
 
-  logger(`build: Connected to MySQL.  Reading file from ${unzippedPath}`);
-
+  logger('BUILD.MYSQL_CONNECT', { unzippedPath });
   await importer.dropDatabaseIfExists();
-  logger(`build: Dropped database ${database}.`);
+  logger('BUILD.MYSQL_DROP_DB', { database });
   await importer.createDatabaseIfDoesNotExist();
-  logger(`build: Created database ${database}.`);
-  logger(`build: Importing database ${database}.  This may take a while...`);
+  logger('BUILD.MYSQL_CREATE_DB', { database });
+  logger('BUILD.MYSQL_IMPORT_DB', { database});
+
   await importer.execute();
-  logger(`build: Imported ${database} successfully!`);
+
+  logger('BUILD.END', { database });
 
   return true;
 }

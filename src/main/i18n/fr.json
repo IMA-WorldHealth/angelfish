@@ -1,0 +1,35 @@
+{
+  "UNZIP": {
+    "CONVERTING" : "unzip: conversion de {{fpath}} en {{newFilePath}}",
+    "READ_INTO_MEMORY" : "unzip: lecture du fichier en mémoire à partir du disque.",
+    "DECOMPRESS_FILE" : "unzip: fichier de décompression avec l'algorithme LZMA.",
+    "DECOMPRESS_WRITE" : "unzip: fichier décompressé. Écriture de la sortie décompressée sur le disque.",
+    "FILE_WRITTEN" : "unzip: fichier écrit dans {{newFilePath}}"
+  },
+  "BUILD" : {
+    "START" : "build: démarrage de la construction de {{fname}}",
+    "USING_PATH" : "build: en utilisant {{dbpath}} pour la construction.",
+    "UNZIPPING_PATH" : "build: décompression de {{dbpath}}.",
+    "UNZIPPED_TO" : "build: Fini. A écrit le fichier dans {{unzippedPath}}.",
+    "MYSQL_INIT" : "build: créé un nouvel importateur MySQL avec le nom d'utilisateur {{user}}.",
+    "MYSQL_CONNECT" : "build: Connecté à MySQL. Lecture du fichier depuis {{unzippedPath}}.",
+    "MYSQL_DROP_DB" : "build: base de données supprimée {{database}}.",
+    "MYSQL_CREATE_DB" : "build: base de données créé {{database}}.",
+    "MYSQL_IMPORT_DB" : "build: Importation de la base de données {{database}}. Cela peut prendre un peu de temps....",
+    "MYSQL_END" : "build:  {{database}} importée avec succès!"
+  },
+  "RM" : {
+    "START" : "rm: suppression de {{fullpath}}.",
+    "END" : "rm: fini."
+  },
+  "SSH" : {
+    "CONNECT" : "Connexion à {{user}}@{{host}} par SSH..." ,
+    "CONNECTED" : "Connexion réussie à {{user}}@{{host}}." ,
+    "LOOKUP_BACKUP" : "Recherche du fichier le plus récent dans {{remotePath}}.",
+    "LAST_CHANGED" : "Le dernier fichier est: {{lastChangedFile}}",
+    "DOWNLOADING_FILE" : "Téléchargement de {{ remoteFilePath }}",
+    "DOWNLOADED_TO" : "Téléchargé sur {{ localFilePath }}",
+    "ERROR" : "Une erreur est survenue. C'est {{ error }}",
+    "ERROR_STACK" : "Détails de l'erreur: {{ stack }}"
+  }
+}

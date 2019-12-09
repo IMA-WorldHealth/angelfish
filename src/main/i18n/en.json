@@ -1,0 +1,35 @@
+{
+  "UNZIP": {
+    "CONVERTING" : "unzip: Converting {{fpath}} into {{newFilePath}}",
+    "READ_INTO_MEMORY" : "unzip: Reading file into memory from the disk.",
+    "DECOMPRESS_FILE" : "unzip: Decompressing file with LZMA algorithm.",
+    "DECOMPRESS_WRITE" : "unzip: File decompressed.  Writing decompressed output to disk.",
+    "FILE_WRITTEN" : "unzip: File written to {{newFilePath}}"
+  },
+  "BUILD" : {
+    "START" : "build: Starting build of {{fname}}",
+    "USING_PATH" : "build: Using {{dbpath}} for build.",
+    "UNZIPPING_PATH" : "build: Unzipping {{dbpath}}.",
+    "UNZIPPED_TO" : "build: Done. Unzipped to {{unzippedPath}}.",
+    "MYSQL_INIT" : "build: Created new MySQL importer with username {{user}}",
+    "MYSQL_CONNECT" : "build: Connected to MySQL.  Reading file from {{unzippedPath}}",
+    "MYSQL_DROP_DB" : "build: Dropped database {{database}}.",
+    "MYSQL_CREATE_DB" : "build: Created database {{database}}.",
+    "MYSQL_IMPORT_DB" : "build: Importing database {{database}}.  This may take a while...",
+    "MYSQL_END" : "build: Imported {{database}} successfully!"
+  },
+  "RM" : {
+    "START" : "rm: removing {{fullpath}}.",
+    "END" : "rm: Finished"
+  },
+  "SSH" : {
+    "CONNECT" : "Connecting to {{user}}@{{host}} via SSH..." ,
+    "CONNECTED" : "Connection succeeded to {{user}}@{{host}}." ,
+    "LOOKUP_BACKUP" : "Looking up most recent file in {{remotePath}}.",
+    "LAST_CHANGED" : "Most recent file is: {{lastChangedFile}}",
+    "DOWNLOADING_FILE" : "Downloading {{ remoteFilePath }}",
+    "DOWNLOADED_TO" : "Downloaded to {{ localFilePath }}",
+    "ERROR" : "An error occurred. It is {{ error }}",
+    "ERROR_STACK" : "Full stack is : {{ stack }}"
+  }
+}
