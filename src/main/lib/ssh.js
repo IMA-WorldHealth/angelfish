@@ -1,9 +1,17 @@
 const SSH = require('node-ssh');
 const path = require('path');
 const debug = require('debug')('angelfish:ssh');
+const EventEmitter = require('events');
 const { getFileStat } = require('./util');
 
 const client = new SSH();
+
+const pubsub = new EventEmitter();
+
+function logger(message, isError = false) {
+  debug(message);
+  pubsub.emit('ssh.log', { message, type: isError ? 'error' : 'info' });
+}
 
 /**
  * @function copy
@@ -13,7 +21,7 @@ const client = new SSH();
  */
 async function copy(credentials, database) {
   try {
-    debug('Connecting to remove SSH instance...');
+    logger('Connecting to remote SSH instance...');
 
     await client.connect({
       host: credentials.hostname,
@@ -23,27 +31,28 @@ async function copy(credentials, database) {
 
     const remotePath = path.join(credentials.remotebackupdir, '/', database);
 
-    debug(`Looking up latest file in ${remotePath}.`);
+    logger(`Looking up most recent file in ${remotePath}.`);
 
     // get the latest file changed on the server
     const lastChangedFile = await client.exec(`cd ${remotePath}; ls -Art *.xz | tail -n 1`);
 
-    debug(`Found: ${lastChangedFile}`);
+    logger(`Most recent file is: ${lastChangedFile}`);
 
     const remoteFilePath = path.join(remotePath, lastChangedFile);
     const localFilePath = path.join(credentials.localbackupdir, database, lastChangedFile);
 
-    debug(`Path is: ${remoteFilePath}`);
+    logger(`Path is: ${remoteFilePath}`);
+    logger(`Downloading ${remoteFilePath}`);
 
     // download it to local directory
     await client.getFile(localFilePath, remoteFilePath);
 
-    debug(`Downloaded to ${localFilePath}`);
+    logger(`Downloaded to ${localFilePath}`);
 
     return getFileStat(localFilePath);
   } catch (e) {
-    debug('Something went wrong');
-    debug(e);
+    logger(`An error occurred! It is ${e.toString()}`, true);
+    logger(`Full stack: ${e.stack}`, true);
   }
 
   return '';
@@ -52,10 +61,13 @@ async function copy(credentials, database) {
 /**
  * Adds the ssh handlers to the main IPC process.
  */
-function addIPCHandlers(ipc) {
-
+function addIPCHandlers(ipc, wc) {
   // handle the ssh copy method
   ipc.handle('ssh.copy', (event, ...args) => copy(...args));
+
+  pubsub.on('ssh.log', (data) => {
+    wc.send('ssh.log', data)
+  });
 }
 
 exports.addIPCHandlers = addIPCHandlers;

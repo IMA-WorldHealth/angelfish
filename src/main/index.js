@@ -30,6 +30,10 @@ function createMainWindow() {
     mainWindow = null
   })
 
+  // adds IPC hanlders
+  vfs.addIPCHandlers(ipcMain, window.webContents);
+  ssh.addIPCHandlers(ipcMain, window.webContents);
+
   return window
 }
 
@@ -53,6 +57,3 @@ app.on('ready', () => {
   mainWindow = createMainWindow()
 })
 
-// adds IPC hanlders
-vfs.addIPCHandlers(ipcMain);
-ssh.addIPCHandlers(ipcMain);

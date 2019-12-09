@@ -7,7 +7,7 @@ try {
   data = {};
 }
 
-const hasData = Object.keys(data).length > 0;
+const hasData = Object.keys(data || {}).length > 0;
 
 const store = {
   debug : true,

@@ -3,8 +3,16 @@ const path = require('path');
 const lzma = require('lzma-native');
 const MySQLImporter= require('node-mysql-import');
 const debug = require('debug')('angelfish:vfs');
+const EventEmitter = require('events');
 const { app } = require('electron');
 const { getFileStat } = require('./util');
+
+const pubsub = new EventEmitter();
+
+function logger(message, isError = false) {
+  debug(message);
+  pubsub.emit('vfs.log', { message, timestamp: Date.now(), type: isError ? 'error' : 'info' });
+}
 
 // preprocess and gets absolute local path of database file(s)
 function getLocalPath(params, database) {
@@ -33,7 +41,9 @@ async function getLocalFileList(params, database) {
 async function removeLocalBackup(params, database, fname) {
   const directory = getLocalPath(params, database);
   const fullpath = path.join(directory, fname);
+  logger(`rm: removing ${fullpath}.`);
   await fs.promises.unlink(fullpath);
+  logger(`rm: done.`);
 }
 
 
@@ -50,45 +60,53 @@ async function unxz(fpath) {
 
   const newFilePath = path.resolve(tmpDir, baseName);
 
-  debug(`Parsing ${fpath} into ${newFilePath}`);
+  logger(`unzip: Parsing ${fpath} into ${newFilePath}`);
 
+  logger('unzip: Reading file into memory from the disk.');
   const input = await fs.promises.readFile(fpath);
-  debug('File read from disk');
+  logger('unzip: File read into memory.');
+  logger('unzip: Decompressing file with LZMA algorithm.');
   const output = await lzma.decompress(input);
-  debug('File decompressed');
+  logger('unzip: File decompressed.  Writing decompressed output to disk.');
   await fs.promises.writeFile(newFilePath, output, 'utf8');
-  debug(`File written to ${newFilePath}`);
+  logger(`unzip: File written to ${newFilePath}`);
 
   return newFilePath;
 }
 
 async function build(params, database, fname) {
-  debug('Called build() on', database);
+  logger(`build: Starting build of ${fname}`);
 
   const backuppath = getLocalPath(params, database);
   const dbpath = path.join(backuppath, fname);
 
+  logger(`build: Using ${dbpath} for build.`);
+  logger(`build: Unzipping ${dbpath}.`);
+
   const unzippedPath= await unxz(dbpath);
 
-  debug('Unzipped to', unzippedPath);
+  logger(`build: Done. Unzipped to ${unzippedPath}.`);
 
   const importer = await new MySQLImporter('localhost', 3306, params.mysqluser, params.mysqlpassword, database, unzippedPath);
 
-  // const sql = await fs.promises.readFile(unzippedPath);
+  logger(`build: Created new MySQL importer with username ${params.mysqluser}`);
+
   await importer.init();
 
-  debug(`Connected to MySQL.  Reading file from ${unzippedPath}`);
+  logger(`build: Connected to MySQL.  Reading file from ${unzippedPath}`);
 
   await importer.dropDatabaseIfExists();
+  logger(`build: Dropped database ${database}.`);
   await importer.createDatabaseIfDoesNotExist();
+  logger(`build: Created database ${database}.`);
+  logger(`build: Importing database ${database}.  This may take a while...`);
   await importer.execute();
-
-  debug(`Imported successfully`);
+  logger(`build: Imported ${database} successfully!`);
 
   return true;
 }
 
-function addIPCHandlers(ipc) {
+function addIPCHandlers(ipc, wc) {
   ipc.handle('vfs.list-local',
     (event, ...args) => getLocalFileList(...args));
 
@@ -97,6 +115,10 @@ function addIPCHandlers(ipc) {
 
   ipc.handle('vfs.build-local',
     (event, ...args) => build(...args));
+
+  pubsub.on('vfs.log', (data) => {
+    wc.send('vfs.log', data)
+  });
 }
 
 exports.addIPCHandlers = addIPCHandlers;
