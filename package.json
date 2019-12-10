@@ -8,18 +8,25 @@
     "email": "jonathanwniles@imaworldhealth.org",
     "url": "https://bhi.ma"
   },
+  "build" : {
+    "appId" : "com.angelfish.app",
+    "icon" : "src/icon.png",
+    "extraResources" : [{ "from" : "src/main/i18n/", "to" : "i18n/" }]
+  },
   "description": "Synchronize databases over the network via SSH.",
   "scripts": {
     "dev": "electron-webpack dev",
     "compile": "electron-webpack",
-    "dist": "yarn compile && electron-builder --linux deb --x64",
+    "dist": "yarn compile && electron-builder --linux --x64",
     "pack": "electron-builder --dir",
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null",
     "postinstall": "electron-builder install-app-deps"
   },
-  "build": {},
   "dependencies": {
     "human-readable-bytes": "^1.1.0",
+    "i18next": "^19.0.1",
+    "i18next-electron-language-detector": "^0.0.10",
+    "i18next-sync-fs-backend": "^1.1.1",
     "lzma-native": "^5.0.0",
     "node-mysql-import": "^1.1.0",
     "node-ssh": "^6.0.0",

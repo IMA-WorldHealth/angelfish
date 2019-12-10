@@ -1,13 +1,23 @@
 const fs = require('fs');
 const path = require('path');
 const hr = require('human-readable-bytes');
-const _ = require('lodash');
 
-// set up i18n
-const LANG = 'fr';
-_.templateSettings.interpolate = /{{([\s\S]+?)}}/g;
-const dictFile = fs.readFileSync(path.resolve(__dirname, '../i18n/',  `${LANG.toLowerCase()}.json`));
-const dict = JSON.parse(dictFile);
+const i18next = require('i18next');
+const LanguageDetector = require('i18next-electron-language-detector');
+const SyncBackend = require('i18next-sync-fs-backend');
+
+const cfg = {
+  lng : 'fr',
+  backend : {
+    loadPath: path.resolve(__dirname, '../i18n/{{lng}}.json'),
+  },
+  initImmediate: false
+};
+
+i18next
+  .use(SyncBackend)
+  .use(LanguageDetector)
+  .init(cfg);
 
 function convertToReadable(size) {
   return hr.default(size, 1024);
@@ -23,8 +33,8 @@ async function getFileStat(fpath) {
 
 // poor man's i18n function
 function i18n(key, params = {}) {
-  const tmpl = _.get(dict, key, key);
-  return _.template(tmpl)(params);
+  const parameters = Object.assign(params, { interpolation : { escapeValue : false } });
+  return i18next.t(key, parameters);
 }
 
 exports.i18n = i18n;
