@@ -9,12 +9,12 @@
         @click="sync"
       >
         <i class="icon icon-download" />
-        Sync Latest Database
+        Synchroniser la dernière base de données
       </a>
     </h1>
 
     <div v-if="isBuilding">
-      <h5>Building <u>{{ buildFile.name }}</u></h5>
+      <h5>Construction de <u>{{ buildFile.name }}</u></h5>
 
       <progress
         class="progress"
@@ -22,7 +22,7 @@
         :value="progress.value"
       />
 
-      <b> Event Log: </b>
+      <b> Journal des événements : </b>
 
       <ul class="event-log">
         <li
@@ -37,7 +37,7 @@
     </div>
 
     <div v-else-if="isSynchronising">
-      <h5>Synchronising <u>{{ database }}</u></h5>
+      <h5>Synchronisation de <u>{{ database }}</u></h5>
 
       <progress
         class="progress"
@@ -45,7 +45,7 @@
         :value="progress.value"
       />
 
-      <b> Event Log: </b>
+      <b> Journal des événements : </b>
       <ul class="event-log">
         <li
           v-for="event in logs.sync"
@@ -67,9 +67,9 @@
     >
       <thead>
         <tr>
-          <th>File</th>
-          <th>Size</th>
-          <th>Creation Date</th>
+          <th>Fichier</th>
+          <th>Taille </th>
+          <th>Date de création</th>
           <th
             colspan="2"
             class="text-center"
@@ -96,7 +96,7 @@
               @click="build(file)"
             >
               <i class="icon icon-refresh" />
-              Build File
+              Construire le fichier
             </a>
           </td>
           <td>
@@ -107,13 +107,16 @@
               @click="remove(file)"
             >
               <i class="icon icon-delete" />
-              Remove File
+              Effacer le fichier
             </a>
           </td>
         </tr>
         <tr v-if="files.length === 0">
-          <td colspan="4">
-            No local files yet!
+          <td
+            colspan="5"
+            class="text-center"
+          >
+            Aucun fichier local pour le moment!
           </td>
         </tr>
       </tbody>

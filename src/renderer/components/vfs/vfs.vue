@@ -22,7 +22,7 @@
           @click="configure"
         >
           <i class="icon icon-menu" />
-          Parameters
+          Paramètres
         </a>
       </li>
     </ul>
