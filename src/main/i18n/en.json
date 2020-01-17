@@ -2,9 +2,10 @@
   "UNZIP": {
     "CONVERTING" : "unzip: Converting {{fpath}} into {{newFilePath}}",
     "READ_INTO_MEMORY" : "unzip: Reading file into memory from the disk.",
-    "DECOMPRESS_FILE" : "unzip: Decompressing file with LZMA algorithm.",
+    "DECOMPRESS_FILE" : "unzip: Decompressing file with GZIP algorithm.",
     "DECOMPRESS_WRITE" : "unzip: File decompressed.  Writing decompressed output to disk.",
-    "FILE_WRITTEN" : "unzip: File written to {{newFilePath}}"
+    "FILE_WRITTEN" : "unzip: File written to {{newFilePath}}",
+    "ERROR" : "unzip: An error occurred: {{message}}"
   },
   "BUILD" : {
     "START" : "build: Starting build of {{fname}}",
@@ -16,7 +17,9 @@
     "MYSQL_DROP_DB" : "build: Dropped database {{database}}.",
     "MYSQL_CREATE_DB" : "build: Created database {{database}}.",
     "MYSQL_IMPORT_DB" : "build: Importing database {{database}}.  This may take a while...",
-    "MYSQL_END" : "build: Imported {{database}} successfully!"
+    "MYSQL_END" : "build: Imported {{database}} successfully!",
+    "BLANK_START" : "build: building blank database from {{ installdir }}.",
+    "BLANK_END" : "build: finished."
   },
   "RM" : {
     "START" : "rm: removing {{fullpath}}.",
