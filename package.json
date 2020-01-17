@@ -25,7 +25,7 @@
   "scripts": {
     "dev": "electron-webpack dev",
     "compile": "electron-webpack",
-    "dist": "yarn compile && electron-builder --linux deb --x64",
+    "dist": "yarn compile && electron-builder",
     "pack": "electron-builder --dir",
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null",
     "postinstall": "electron-builder install-app-deps"
