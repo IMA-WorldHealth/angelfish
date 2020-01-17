@@ -1,11 +1,13 @@
 const fs = require('fs');
 const path = require('path');
-const lzma = require('lzma-native');
 const MySQLImporter= require('node-mysql-import');
 const debug = require('debug')('angelfish:vfs');
+const util = require('util');
+const zlib = require('zlib');
 const EventEmitter = require('events');
 const { app } = require('electron');
 const { getFileStat, i18n } = require('./util');
+const { exec } = require('child_process');
 
 const pubsub = new EventEmitter();
 
@@ -49,30 +51,37 @@ async function removeLocalBackup(params, database, fname) {
 
 
 /**
- * @function unxz
+ * @function gunzip
  *
  * @description
- * Async wrapper for lzma.decompress() that unzips the file
+ * Async wrapper for zlib's gunzip that unzips the file
  * to a temporary directory.
  */
-async function unxz(fpath) {
+async function gunzip(fpath) {
   const tmpDir = app.getPath('temp');
-  const baseName = path.basename(fpath).replace('.xz', '');
+  const baseName = path.basename(fpath).replace('.gz', '');
 
   const newFilePath = path.resolve(tmpDir, baseName);
 
   logger('UNZIP.CONVERTING', { fpath, newFilePath });
 
-  const input = await fs.promises.readFile(fpath);
+  // wrap the entire stream decompression in a promise and wait for its finish
+  await new Promise((resolve, reject) => {
+    logger('UNZIP.READ_INTO_MEMORY');
 
-  logger('UNZIP.READ_INTO_MEMORY');
-  logger('UNZIP.DECOMPRESS_FILE');
+    const rejection = (err) => {
+      logger('UNZIP.ERRORED', { message: err.message });
+      reject(err);
+    }
 
-  const output = await lzma.decompress(input);
-
-  logger('UNZIP.DECOMPRESS_WRITE');
-
-  await fs.promises.writeFile(newFilePath, output, 'utf8');
+    fs.createReadStream(fpath)
+      .on('error', rejection)
+      .pipe(zlib.createGunzip())
+      .on('error', rejection)
+      .pipe(fs.createWriteStream(newFilePath))
+      .on('error', rejection)
+      .on('finish', () => resolve());
+  });
 
   logger('UNZIP.FILE_WRITTEN', {newFilePath});
 
@@ -88,7 +97,7 @@ async function build(params, database, fname) {
   logger('BUILD.USING_PATH', { dbpath });
   logger('BUILD.UNZIPPING_PATH', { dbpath});
 
-  const unzippedPath= await unxz(dbpath);
+  const unzippedPath= await gunzip(dbpath);
 
   logger('BUILD.UNZIPPED_TO', { unzippedPath });
 
@@ -112,6 +121,16 @@ async function build(params, database, fname) {
   return true;
 }
 
+async function blank({installdir}) {
+  const execp = util.promisify(exec);
+  const env = {
+    NODE_ENV : 'development',
+    DB_NAME : 'blank',
+  }
+  await execp('bash sh/build-init-database.sh', { cwd : installdir, env });
+  return true;
+}
+
 function addIPCHandlers(ipc, wc) {
   ipc.handle('vfs.list-local',
     (event, ...args) => getLocalFileList(...args));
@@ -121,6 +140,9 @@ function addIPCHandlers(ipc, wc) {
 
   ipc.handle('vfs.build-local',
     (event, ...args) => build(...args));
+
+  ipc.handle('vfs.build-blank',
+    (event, ...args) => blank(...args));
 
   pubsub.on('vfs.log', (data) => {
     wc.send('vfs.log', data)

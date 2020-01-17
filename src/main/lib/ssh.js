@@ -37,7 +37,7 @@ async function copy(credentials, database) {
     logger('SSH.LOOKUP_BACKUP', { remotePath });
 
     // get the latest file changed on the server
-    const lastChangedFile = await client.exec(`cd ${remotePath}; ls -Art *.xz | tail -n 1`);
+    const lastChangedFile = await client.exec(`cd ${remotePath}; ls -Art *.gz | tail -n 1`);
 
     logger('SSH.LAST_CHANGED', { lastChangedFile });
 
