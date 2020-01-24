@@ -32,7 +32,7 @@ async function copy(credentials, database) {
 
     logger('SSH.CONNECTED', { user : credentials.username, host : credentials.hostname });
 
-    const remotePath = path.join(credentials.remotebackupdir, '/', database);
+    const remotePath = path.posix.join(credentials.remotebackupdir, '/', database);
 
     logger('SSH.LOOKUP_BACKUP', { remotePath });
 
@@ -41,7 +41,7 @@ async function copy(credentials, database) {
 
     logger('SSH.LAST_CHANGED', { lastChangedFile });
 
-    const remoteFilePath = path.join(remotePath, lastChangedFile);
+    const remoteFilePath = path.posix.join(remotePath, lastChangedFile);
     const localFilePath = path.join(credentials.localbackupdir, database, lastChangedFile);
 
     logger('SSH.DOWNLOADING_FILE', { remoteFilePath });
