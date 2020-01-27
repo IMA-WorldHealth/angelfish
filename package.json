@@ -17,8 +17,8 @@
         "to": "i18n/"
       }
     ],
-    "linux" : {
-      "category" : "Utility"
+    "linux": {
+      "category": "Utility"
     }
   },
   "description": "Synchronize databases over the network via SSH.",
