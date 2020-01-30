@@ -54,7 +54,9 @@ async function copy(credentials, database) {
       await fs.promises.mkdir(localFileDir, { recursive : true });
     }
 
-    const localFilePath = path.join(credentials.localbackupdir, database, lastChangedFile);
+    const localFilePath = path
+      .join(credentials.localbackupdir, database, lastChangedFile)
+      .replace(':', 'T');
 
     try {
       await fs.promises.access(localFilePath, fs.constants.F_OK);
