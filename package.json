@@ -2,9 +2,9 @@
   "name": "AngelFish",
   "version": "1.2.0",
   "homepage": "https://angelfish.bhi.ma",
-  "repository" : "https://github.com/ima-worldhealth/angelfish.git",
+  "repository": "https://github.com/ima-worldhealth/angelfish.git",
   "license": "MIT",
-  "main" : "main.js",
+  "main": "main.js",
   "author": {
     "name": "jniles",
     "email": "jonathanwniles@imaworldhealth.org",
@@ -21,10 +21,10 @@
     ],
     "linux": {
       "category": "Utility",
-      "publish" : "github"
+      "publish": "github"
     },
     "win": {
-      "publish" : "github"
+      "publish": "github"
     }
   },
   "description": "Synchronize databases over the network via SSH.",
@@ -35,7 +35,7 @@
     "pack": "electron-builder --dir",
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null",
     "postinstall": "electron-builder install-app-deps",
-    "release" : "electron-builder build"
+    "release": "electron-builder build"
   },
   "dependencies": {
     "human-readable-bytes": "^1.1.0",
