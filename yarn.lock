@@ -5213,10 +5213,10 @@ node-releases@^1.1.44:
   dependencies:
     semver "^6.3.0"
 
-node-ssh@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/node-ssh/-/node-ssh-7.0.0.tgz#f5a34f3d84a68bf4c646d55cce07dc11f2f1c22a"
-  integrity sha512-LwdGalFACK+DCVI1+wkehR/a8uIkmAn0npW43f8U6XhH20112a/WAXv3oQay7IK2YHY1J6r5JT2MEHhjyQxKIA==
+node-ssh@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/node-ssh/-/node-ssh-8.0.0.tgz#e5b274f477983aa4b40b24a2ab98b19f51aefec3"
+  integrity sha512-xqX3ia49AYDcL02KUqk+rtdqTSbLcca+R2MasiLGuF55NBH1BYvw61iFXSMR898vA8vYMTQDSVRvTLx4Lior5Q==
   dependencies:
     p-map "^3.0.0"
     sb-promisify "^2.0.1"
