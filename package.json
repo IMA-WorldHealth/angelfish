@@ -12,7 +12,7 @@
   "build": {
     "appId": "com.angelfish.app",
     "icon": "src/icon.png",
-    "extraMetadata" : "false",
+    "extraMetadata": false,
     "extraResources": [
       {
         "from": "src/main/i18n/",
@@ -25,13 +25,15 @@
     },
     "win": {
       "publish": "github",
-      "target" : [{
-        "target" : "msi",
-        "arch" : [
-          "x64",
-          "ia32"
-        ]
-      }]
+      "target": [
+        {
+          "target": "msi",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
+      ]
     }
   },
   "description": "Synchronize databases over the network via SSH.",
