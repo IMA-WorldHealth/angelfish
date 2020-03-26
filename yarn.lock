@@ -2906,16 +2906,16 @@ electron-webpack-js@~2.3.2:
     babel-loader "^8.0.6"
     babel-plugin-component "^1.1.1"
 
-electron-webpack-vue@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/electron-webpack-vue/-/electron-webpack-vue-2.3.0.tgz#eca8d8c33671067c2c08af0a212530f9430709a6"
-  integrity sha512-3F8G+1rJ8AaD38DTUN+VOcdGezLI4eRJxg+71a6LNxxU1D8WZFbQJem9bmGrjQ11/ErIifJs/V2QRnNyuJtg7g==
+electron-webpack-vue@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/electron-webpack-vue/-/electron-webpack-vue-2.4.0.tgz#14afaaca8b611aef6f50ff7b03f0054a3e781d6f"
+  integrity sha512-x67f/HYgF7pYX5pjrH8vcNztcyK44loC3kBz8VuDpmznjSfBGoBJuQEQLd2g7HvPxVVqquKrei3TwiXAE7fbHw==
   dependencies:
-    vue-class-component "^7.1.0"
+    vue-class-component "^7.2.3"
     vue-html-loader "^1.2.4"
-    vue-loader "^15.7.0"
+    vue-loader "^15.9.0"
     vue-style-loader "^4.1.2"
-    vue-template-compiler "^2.6.10"
+    vue-template-compiler "^2.6.11"
 
 electron-webpack@^2.7.4:
   version "2.7.4"
@@ -7926,10 +7926,10 @@ vm-browserify@^1.0.1:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
 
-vue-class-component@^7.1.0:
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/vue-class-component/-/vue-class-component-7.1.0.tgz#b33efcb10e17236d684f70b1e96f1946ec793e87"
-  integrity sha512-G9152NzUkz0i0xTfhk0Afc8vzdXxDR1pfN4dTwE72cskkgJtdXfrKBkMfGvDuxUh35U500g5Ve4xL8PEGdWeHg==
+vue-class-component@^7.2.3:
+  version "7.2.3"
+  resolved "https://registry.yarnpkg.com/vue-class-component/-/vue-class-component-7.2.3.tgz#a5b1abd53513a72ad51098752e2dedd499807cca"
+  integrity sha512-oEqYpXKaFN+TaXU+mRLEx8dX0ah85aAJEe61mpdoUrq0Bhe/6sWhyZX1JjMQLhVsHAkncyhedhmCdDVSasUtDw==
 
 vue-eslint-parser@^7.0.0:
   version "7.0.0"
@@ -7959,10 +7959,10 @@ vue-html-loader@^1.2.4:
     loader-utils "^1.0.2"
     object-assign "^4.1.0"
 
-vue-loader@^15.7.0:
-  version "15.8.3"
-  resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-15.8.3.tgz#857cb9e30eb5fc25e66db48dce7e4f768602a23c"
-  integrity sha512-yFksTFbhp+lxlm92DrKdpVIWMpranXnTEuGSc0oW+Gk43M9LWaAmBTnfj5+FCdve715mTHvo78IdaXf5TbiTJg==
+vue-loader@^15.9.0:
+  version "15.9.1"
+  resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-15.9.1.tgz#bd2ab8f3d281e51d7b81d15390a58424d142243e"
+  integrity sha512-IaPU2KOPjs/QjMlxFs/TiTtQUSbftQ7lsAvoxe21rtcQohsMhx+1AltXCNhZIpIn46PtODiAgz+o8RbMpKtmJw==
   dependencies:
     "@vue/component-compiler-utils" "^3.1.0"
     hash-sum "^1.0.2"
@@ -7978,7 +7978,7 @@ vue-style-loader@^4.1.0, vue-style-loader@^4.1.2:
     hash-sum "^1.0.2"
     loader-utils "^1.0.2"
 
-vue-template-compiler@^2.6.10:
+vue-template-compiler@^2.6.11:
   version "2.6.11"
   resolved "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.6.11.tgz#c04704ef8f498b153130018993e56309d4698080"
   integrity sha512-KIq15bvQDrcCjpGjrAhx4mUlyyHfdmTaoNfeoATHLAiWB+MU3cx4lOzMwrnUh9cCxy0Lt1T11hAFY6TQgroUAA==
