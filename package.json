@@ -2,6 +2,7 @@
   "name": "AngelFish",
   "version": "1.2.0",
   "homepage": "https://angelfish.bhi.ma",
+  "repository": "https://github.com/ima-worldhealth/angelfish.git",
   "license": "MIT",
   "author": {
     "name": "jniles",
@@ -11,24 +12,39 @@
   "build": {
     "appId": "com.angelfish.app",
     "icon": "src/icon.png",
+    "extraMetadata": false,
     "extraResources": [
       {
         "from": "src/main/i18n/",
         "to": "i18n/"
       }
     ],
-    "linux" : {
-      "category" : "Utility"
+    "linux": {
+      "category": "Utility",
+      "publish": "github"
+    },
+    "win": {
+      "publish": "github",
+      "target": [
+        {
+          "target": "msi",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
+      ]
     }
   },
   "description": "Synchronize databases over the network via SSH.",
   "scripts": {
     "dev": "electron-webpack dev",
     "compile": "electron-webpack",
-    "dist": "yarn compile && electron-builder --linux deb --x64",
+    "dist": "yarn compile && electron-builder",
     "pack": "electron-builder --dir",
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null",
-    "postinstall": "electron-builder install-app-deps"
+    "postinstall": "electron-builder install-app-deps",
+    "release": "electron-builder build"
   },
   "dependencies": {
     "human-readable-bytes": "^1.1.0",
@@ -50,6 +66,7 @@
     "eslint": "^6.7.2",
     "eslint-plugin-html": "^6.0.0",
     "eslint-plugin-vue": "^6.2.2",
+    "html-loader": "1.0.0-alpha.0",
     "vue": "^2.6.10",
     "vue-eslint-parser": "^7.0.0",
     "webpack": "~4.42.1"

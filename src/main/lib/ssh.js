@@ -1,5 +1,6 @@
 const SSH = require('node-ssh');
 const path = require('path');
+const fs = require('fs');
 const debug = require('debug')('angelfish:ssh');
 const EventEmitter = require('events');
 const { getFileStat, i18n } = require('./util');
@@ -32,7 +33,7 @@ async function copy(credentials, database) {
 
     logger('SSH.CONNECTED', { user : credentials.username, host : credentials.hostname });
 
-    const remotePath = path.join(credentials.remotebackupdir, '/', database);
+    const remotePath = path.posix.join(credentials.remotebackupdir, '/', database);
 
     logger('SSH.LOOKUP_BACKUP', { remotePath });
 
@@ -41,15 +42,35 @@ async function copy(credentials, database) {
 
     logger('SSH.LAST_CHANGED', { lastChangedFile });
 
-    const remoteFilePath = path.join(remotePath, lastChangedFile);
-    const localFilePath = path.join(credentials.localbackupdir, database, lastChangedFile);
+    const remoteFilePath = path.posix.join(remotePath, lastChangedFile);
 
-    logger('SSH.DOWNLOADING_FILE', { remoteFilePath });
+    const localFileDir = path.join(credentials.localbackupdir, database);
 
-    // download it to local directory
-    await client.getFile(localFilePath, remoteFilePath);
+    try {
+      await fs.promises.access(localFileDir, fs.constants.F_OK);
+      logger('SSH.LOCATED_DIR', { localFileDir });
+    } catch (e) {
+      logger('SSH.CREATING_DIR', { localFileDir });
+      await fs.promises.mkdir(localFileDir, { recursive : true });
+    }
 
-    logger('SSH.DOWNLOADED_TO', { localFilePath });
+    const localFilePath = path
+      .join(credentials.localbackupdir, database, lastChangedFile)
+      .replace(':', 'T');
+
+    try {
+      await fs.promises.access(localFilePath, fs.constants.F_OK);
+      logger('SSH.LOCAL_FILE_EXISTS', { localFilePath });
+    } catch (e) {
+      logger('SSH.DOWNLOADING_FILE', { remoteFilePath });
+
+      // download it to local directory
+      await client.getFile(localFilePath, remoteFilePath);
+
+      logger('SSH.DOWNLOADED_TO', { localFilePath });
+    }
+
+
 
     return getFileStat(localFilePath);
   } catch (e) {

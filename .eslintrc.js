@@ -6,6 +6,9 @@ module.exports = {
     parser: 'babel-eslint',
     sourceType: 'module'
   },
+  plugins : [
+    'html'
+  ],
   env: {
     browser: true,
     node: true
