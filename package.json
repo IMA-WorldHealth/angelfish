@@ -48,7 +48,7 @@
     "electron-webpack-eslint": "^6.0.0",
     "electron-webpack-vue": "^2.4.0",
     "eslint": "^6.7.2",
-    "eslint-plugin-html": "^6.0.1",
+    "eslint-plugin-html": "^6.0.2",
     "eslint-plugin-vue": "^6.2.2",
     "vue": "^2.6.10",
     "vue-eslint-parser": "^7.0.0",
