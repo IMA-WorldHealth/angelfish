@@ -36,7 +36,7 @@
     "i18next-electron-language-detector": "^0.0.10",
     "i18next-sync-fs-backend": "^1.1.1",
     "node-mysql-import": "^1.1.0",
-    "node-ssh": "^8.0.0",
+    "node-ssh": "^10.0.0",
     "source-map-support": "^0.5.12",
     "spectre.css": "^0.5.8"
   },
