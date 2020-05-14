@@ -52,7 +52,7 @@
     "eslint-plugin-vue": "^6.2.2",
     "vue": "^2.6.10",
     "vue-eslint-parser": "^7.0.0",
-    "webpack": "~4.42.1"
+    "webpack": "~4.43.0"
   },
   "resolutions": {
     "js-yaml": "3.13.1"
