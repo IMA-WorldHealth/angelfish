@@ -38,7 +38,7 @@
     "node-mysql-import": "^1.1.0",
     "node-ssh": "^10.0.2",
     "source-map-support": "^0.5.19",
-    "spectre.css": "^0.5.8"
+    "spectre.css": "^0.5.9"
   },
   "devDependencies": {
     "css-loader": "^3.6.0",
