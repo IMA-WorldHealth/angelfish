@@ -41,7 +41,7 @@
     "spectre.css": "^0.5.9"
   },
   "devDependencies": {
-    "css-loader": "^4.2.0",
+    "css-loader": "^4.2.1",
     "electron": "^9.1.2",
     "electron-builder": "^22.8.0",
     "electron-webpack": "^2.8.2",
