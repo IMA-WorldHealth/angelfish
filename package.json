@@ -41,14 +41,14 @@
     "spectre.css": "^0.5.9"
   },
   "devDependencies": {
-    "css-loader": "^4.2.0",
     "electron": "^9.2.0",
+    "css-loader": "^4.2.1",
     "electron-builder": "^22.8.0",
     "electron-webpack": "^2.8.2",
     "electron-webpack-eslint": "^6.0.0",
     "electron-webpack-vue": "^2.4.0",
     "eslint": "^6.7.2",
-    "eslint-plugin-html": "^6.0.2",
+    "eslint-plugin-html": "^6.0.3",
     "eslint-plugin-vue": "^6.2.2",
     "vue": "^2.6.10",
     "vue-eslint-parser": "^7.1.0",
