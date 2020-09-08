@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "electron": "^10.1.1",
-    "css-loader": "^4.2.2",
+    "css-loader": "^4.3.0",
     "electron-builder": "^22.8.0",
     "electron-webpack": "^2.8.2",
     "electron-webpack-eslint": "^6.0.0",
