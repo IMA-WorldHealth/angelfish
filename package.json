@@ -17,8 +17,8 @@
         "to": "i18n/"
       }
     ],
-    "linux" : {
-      "category" : "Utility"
+    "linux": {
+      "category": "Utility"
     }
   },
   "description": "Synchronize databases over the network via SSH.",
@@ -41,8 +41,8 @@
     "spectre.css": "^0.5.9"
   },
   "devDependencies": {
-    "electron": "^10.1.2",
     "css-loader": "^4.3.0",
+    "electron": "^10.1.2",
     "electron-builder": "^22.8.1",
     "electron-webpack": "^2.8.2",
     "electron-webpack-eslint": "^6.0.0",
