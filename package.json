@@ -43,7 +43,7 @@
   "devDependencies": {
     "css-loader": "^5.0.1",
     "electron": "^11.0.2",
-    "electron-builder": "^22.9.1",
+    "electron-builder": "^22.11.3",
     "electron-webpack": "^2.8.2",
     "electron-webpack-eslint": "^6.0.0",
     "electron-webpack-vue": "^2.4.0",
