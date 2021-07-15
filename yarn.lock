@@ -4350,10 +4350,10 @@ i18next-sync-fs-backend@^1.1.1:
     js-yaml "3.13.1"
     json5 "0.5.0"
 
-i18next@^19.8.4:
-  version "19.8.4"
-  resolved "https://registry.yarnpkg.com/i18next/-/i18next-19.8.4.tgz#447718f2a26319b8debdbcc6fbc1a9761be7316b"
-  integrity sha512-FfVPNWv+felJObeZ6DSXZkj9QM1Ivvh7NcFCgA8XPtJWHz0iXVa9BUy+QY8EPrCLE+vWgDfV/sc96BgXVo6HAA==
+i18next@^20.3.3:
+  version "20.3.3"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-20.3.3.tgz#e3fdae045f9f0893e74826ce224715e43c62862b"
+  integrity sha512-tx9EUhHeaipvZ5pFLTaN9Xdm5Ssal774MpujaTA1Wv/ST/1My5SnoBmliY1lOpyEP5Z51Dq1gXifk/y4Yt3agQ==
   dependencies:
     "@babel/runtime" "^7.12.0"
 
